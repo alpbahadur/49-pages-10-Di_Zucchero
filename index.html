@@ -3,9 +3,1019 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website</title>
+    <title>Di Zucchero | Italian Restaurant & Nightclub - Condado, San Juan</title>
+    <meta name="description" content="Experience the perfect blend of authentic Italian dining and vibrant nightlife at Di Zucchero in Condado. Handmade pizza, fresh pasta, and La Piazza Terrace Club - where culinary art meets entertainment.">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #121212;
+            color: #F5F5F5;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+
+        /* Split Screen Hero */
+        .split-hero {
+            display: flex;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .split-panel {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .split-panel:hover {
+            flex: 1.3;
+        }
+
+        .split-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(18,18,18,0.7));
+            z-index: 1;
+            transition: background 0.4s ease;
+        }
+
+        .split-panel:hover::before {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(18,18,18,0.6));
+        }
+
+        .split-panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .split-panel:hover img {
+            transform: scale(1.05);
+        }
+
+        .split-content {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .split-title {
+            font-size: 4rem;
+            font-weight: 200;
+            color: #F5F5F5;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .split-panel:hover .split-title {
+            opacity: 1;
+            transform: translateY(-10px);
+            color: #E0B873;
+        }
+
+        .split-subtitle {
+            font-size: 1.25rem;
+            color: #E0B873;
+            opacity: 0.8;
+            transition: all 0.4s ease;
+        }
+
+        .split-panel:hover .split-subtitle {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+
+        .logo-divider {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            width: 80px;
+            height: 80px;
+            background: #121212;
+            border: 2px solid #E0B873;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            font-size: 1.5rem;
+            color: #E0B873;
+            letter-spacing: 0.1em;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+            background: rgba(18, 18, 18, 0.85);
+            border-bottom: 1px solid rgba(224, 184, 115, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .nav-link {
+            color: #F5F5F5;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: #E0B873;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #E0B873;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Fade In Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Image Hover Effect */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(224, 184, 115, 0.9), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        /* Gold Accent Line */
+        .accent-line {
+            width: 80px;
+            height: 2px;
+            background: #E0B873;
+            margin: 1.5rem auto;
+        }
+
+        .accent-line-left {
+            width: 80px;
+            height: 2px;
+            background: #E0B873;
+            margin: 1.5rem 0;
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: #E0B873;
+            color: #121212;
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 2px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 0.875rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #c9a167;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(224, 184, 115, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #E0B873;
+            padding: 0.875rem 2rem;
+            border: 1px solid #E0B873;
+            border-radius: 2px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 0.875rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: #E0B873;
+            color: #121212;
+            transform: translateY(-2px);
+        }
+
+        /* Menu Card */
+        .menu-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(224, 184, 115, 0.1);
+            border-radius: 4px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .menu-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(224, 184, 115, 0.3);
+            transform: translateY(-5px);
+        }
+
+        /* Parallax Effect */
+        .parallax-section {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        .parallax-overlay {
+            background: linear-gradient(to bottom, rgba(18,18,18,0.8), rgba(18,18,18,0.9));
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        /* Responsive Split Screen */
+        @media (max-width: 768px) {
+            .split-hero {
+                flex-direction: column;
+            }
+
+            .split-panel {
+                flex: 1;
+            }
+
+            .split-title {
+                font-size: 2.5rem;
+            }
+
+            .logo-divider {
+                width: 60px;
+                height: 60px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: #E0B873;
+            z-index: 100;
+            transform-origin: left;
+            transform: scaleX(0);
+        }
+
+        /* Section Spacing */
+        .section-padding {
+            padding: 6rem 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .section-padding {
+                padding: 8rem 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Content will be added here -->
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar hidden" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#home" class="text-2xl font-light tracking-widest text-[#E0B873]" style="font-family: 'Montserrat', sans-serif;">
+                        DI ZUCCHERO
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="#story" class="nav-link">Story</a>
+                    <a href="#menu" class="nav-link">Menu</a>
+                    <a href="#gallery" class="nav-link">Gallery</a>
+                    <a href="#events" class="nav-link">Events</a>
+                    <a href="#private" class="nav-link">Private Parties</a>
+                    <a href="#reservations" class="btn-primary" style="margin-left: 1rem;">Reservations</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-[#F5F5F5] focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden fixed top-0 right-0 h-full w-64 bg-[#1a1a1a] shadow-2xl z-50">
+            <div class="p-6">
+                <button id="close-menu-btn" class="text-[#F5F5F5] float-right focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <div class="clear-both mt-12 space-y-6">
+                    <a href="#story" class="block nav-link">Story</a>
+                    <a href="#menu" class="block nav-link">Menu</a>
+                    <a href="#gallery" class="block nav-link">Gallery</a>
+                    <a href="#events" class="block nav-link">Events</a>
+                    <a href="#private" class="block nav-link">Private Parties</a>
+                    <a href="#reservations" class="block btn-primary text-center mt-8">Reservations</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Split Screen Hero -->
+    <section id="home" class="split-hero">
+        <!-- Dine Panel -->
+        <div class="split-panel" data-section="dine">
+            <img src="./assets/image_0.jpg" alt="Di Zucchero Italian Restaurant">
+            <div class="split-content">
+                <h1 class="split-title">Dine</h1>
+                <p class="split-subtitle">Authentic Italian Cuisine</p>
+            </div>
+        </div>
+
+        <!-- Logo Divider -->
+        <div class="logo-divider">DZ</div>
+
+        <!-- Dance Panel -->
+        <div class="split-panel" data-section="dance">
+            <img src="./assets/image_1.jpg" alt="La Piazza Terrace Club">
+            <div class="split-content">
+                <h1 class="split-title">Dance</h1>
+                <p class="split-subtitle">La Piazza Terrace Club</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section id="story" class="section-padding bg-[#121212]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <h2 class="text-4xl md:text-5xl font-light mb-4 text-[#F5F5F5] tracking-tight">
+                        Where Culinary Art Meets Entertainment
+                    </h2>
+                    <div class="accent-line-left"></div>
+                    <p class="text-lg leading-relaxed mb-6 text-[#A3A3A3]">
+                        Welcome to Di Zucchero, Condado's premier destination for authentic Italian dining and vibrant nightlife. Located on the iconic Ashford Avenue, we've created a unique dual experience that celebrates the best of both worlds.
+                    </p>
+                    <p class="text-lg leading-relaxed mb-6 text-[#A3A3A3]">
+                        By day and evening, our restaurant serves handcrafted pizzas, fresh pasta, and traditional Italian dishes in an intimate, stylishly designed space. As night falls, La Piazza Terrace Club comes alive upstairs, transforming into one of San Juan's most exclusive nightlife destinations.
+                    </p>
+                    <p class="text-lg leading-relaxed mb-8 text-[#A3A3A3]">
+                        From our warm hospitality to our commitment to quality, Di Zucchero embodies the Italian philosophy of "la dolce vita" – the sweet life. We're proud to be pet-friendly and welcome you to experience the magic of Italy in the heart of Puerto Rico.
+                    </p>
+                    <a href="#menu" class="btn-secondary">Explore Our Menu</a>
+                </div>
+                <div class="fade-in gallery-item" style="height: 500px;">
+                    <img src="./assets/image_2.jpg" alt="Di Zucchero Interior">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="section-padding" style="background: linear-gradient(180deg, #121212 0%, #1a1a1a 100%);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-light mb-4 text-[#F5F5F5] tracking-tight">
+                    Authentic Italian Cuisine
+                </h2>
+                <div class="accent-line"></div>
+                <p class="text-lg max-w-3xl mx-auto text-[#A3A3A3]">
+                    Handcrafted with passion, served with love. Our menu features traditional Italian favorites made with the finest ingredients.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <!-- Pizza -->
+                <div class="menu-card fade-in">
+                    <div class="gallery-item mb-6" style="height: 250px;">
+                        <img src="./assets/image_3.jpg" alt="Artisan Pizza">
+                    </div>
+                    <h3 class="text-2xl font-light mb-3 text-[#E0B873]" style="font-family: 'Montserrat', sans-serif;">
+                        Artisan Pizza
+                    </h3>
+                    <p class="text-[#A3A3A3] mb-4">
+                        Hand-tossed dough, San Marzano tomatoes, fresh mozzarella, and premium toppings. Each pizza is a masterpiece baked to perfection in our traditional oven.
+                    </p>
+                    <p class="text-sm text-[#E0B873] uppercase tracking-wider">From $18</p>
+                </div>
+
+                <!-- Pasta -->
+                <div class="menu-card fade-in">
+                    <div class="gallery-item mb-6" style="height: 250px;">
+                        <img src="./assets/image_4.jpg" alt="Fresh Pasta">
+                    </div>
+                    <h3 class="text-2xl font-light mb-3 text-[#E0B873]" style="font-family: 'Montserrat', sans-serif;">
+                        Fresh Pasta
+                    </h3>
+                    <p class="text-[#A3A3A3] mb-4">
+                        Made daily with authentic Italian techniques. From classic carbonara to rich bolognese, our pasta dishes bring the flavors of Italy to your table.
+                    </p>
+                    <p class="text-sm text-[#E0B873] uppercase tracking-wider">From $22</p>
+                </div>
+
+                <!-- Italian Classics -->
+                <div class="menu-card fade-in">
+                    <div class="gallery-item mb-6" style="height: 250px;">
+                        <img src="./assets/image_5.jpg" alt="Italian Classics">
+                    </div>
+                    <h3 class="text-2xl font-light mb-3 text-[#E0B873]" style="font-family: 'Montserrat', sans-serif;">
+                        Italian Classics
+                    </h3>
+                    <p class="text-[#A3A3A3] mb-4">
+                        Osso buco, veal marsala, chicken parmigiana, and more. Traditional recipes passed down through generations, prepared with authentic Italian passion.
+                    </p>
+                    <p class="text-sm text-[#E0B873] uppercase tracking-wider">From $26</p>
+                </div>
+            </div>
+
+            <div class="text-center fade-in">
+                <p class="text-[#A3A3A3] mb-6 italic">
+                    Full menu available upon request. Ask about our daily specials and wine pairings.
+                </p>
+                <a href="tel:7879460834" class="btn-primary">Call for Full Menu</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section-padding bg-[#121212]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-light mb-4 text-[#F5F5F5] tracking-tight">
+                    Gallery
+                </h2>
+                <div class="accent-line"></div>
+                <p class="text-lg max-w-3xl mx-auto text-[#A3A3A3]">
+                    A glimpse into the Di Zucchero experience
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="gallery-item fade-in" style="height: 350px;">
+                    <img src="./assets/image_6.jpg" alt="Restaurant Interior">
+                    <div class="gallery-overlay">
+                        <p class="text-white font-light">Intimate Dining</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in" style="height: 350px;">
+                    <img src="./assets/image_7.jpg" alt="Signature Dish">
+                    <div class="gallery-overlay">
+                        <p class="text-white font-light">Culinary Excellence</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in" style="height: 350px;">
+                    <img src="./assets/image_8.jpg" alt="Bar Area">
+                    <div class="gallery-overlay">
+                        <p class="text-white font-light">Premium Bar</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in" style="height: 350px;">
+                    <img src="./assets/image_9.jpg" alt="Outdoor Terrace">
+                    <div class="gallery-overlay">
+                        <p class="text-white font-light">Ashford Avenue Views</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in" style="height: 350px;">
+                    <img src="./assets/image_10.jpg" alt="La Piazza Club">
+                    <div class="gallery-overlay">
+                        <p class="text-white font-light">La Piazza Terrace Club</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in" style="height: 350px;">
+                    <img src="./assets/image_11.jpg" alt="Nightlife">
+                    <div class="gallery-overlay">
+                        <p class="text-white font-light">Vibrant Nightlife</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events / La Piazza Section -->
+    <section id="events" class="parallax-section section-padding" style="background-image: url('./assets/image_12.jpg');">
+        <div class="parallax-overlay absolute inset-0"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center fade-in">
+                <h2 class="text-4xl md:text-5xl font-light mb-4 text-[#F5F5F5] tracking-tight">
+                    La Piazza Terrace Club
+                </h2>
+                <div class="accent-line"></div>
+                <p class="text-xl leading-relaxed mb-8 text-[#A3A3A3]">
+                    When the sun sets, the party begins. La Piazza Terrace Club opens its doors upstairs, transforming into one of Condado's most exclusive nightlife destinations.
+                </p>
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <div>
+                        <div class="text-4xl mb-4">🎵</div>
+                        <h3 class="text-xl font-light mb-2 text-[#E0B873]">Live DJs</h3>
+                        <p class="text-[#A3A3A3]">Top local and international talent spinning the best tracks</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl mb-4">🍸</div>
+                        <h3 class="text-xl font-light mb-2 text-[#E0B873]">Premium Bar</h3>
+                        <p class="text-[#A3A3A3]">Craft cocktails and bottle service available</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl mb-4">✨</div>
+                        <h3 class="text-xl font-light mb-2 text-[#E0B873]">VIP Experience</h3>
+                        <p class="text-[#A3A3A3]">Private tables and exclusive sections</p>
+                    </div>
+                </div>
+                <p class="text-lg text-[#E0B873] mb-6 font-light">
+                    Open Friday, Saturday & Sunday • Until 5:00 AM
+                </p>
+                <a href="mailto:dizuccheropr@gmail.com" class="btn-primary">Inquire About Events</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Private Parties Section -->
+    <section id="private" class="section-padding" style="background: linear-gradient(180deg, #1a1a1a 0%, #121212 100%);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in gallery-item" style="height: 500px;">
+                    <img src="./assets/image_13.jpg" alt="Private Event Space">
+                </div>
+                <div class="fade-in">
+                    <h2 class="text-4xl md:text-5xl font-light mb-4 text-[#F5F5F5] tracking-tight">
+                        Private Gatherings
+                    </h2>
+                    <div class="accent-line-left"></div>
+                    <p class="text-lg leading-relaxed mb-6 text-[#A3A3A3]">
+                        Host your next celebration at Di Zucchero. Whether it's a corporate event, birthday party, wedding reception, or intimate gathering, we offer customizable packages for groups of all sizes.
+                    </p>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-[#E0B873] mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-[#A3A3A3]">Exclusive venue access for restaurant or club</span>
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-[#E0B873] mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-[#A3A3A3]">Customizable Italian menu with wine pairings</span>
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-[#E0B873] mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-[#A3A3A3]">Professional event planning assistance</span>
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-[#E0B873] mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-[#A3A3A3]">Live entertainment and DJ services available</span>
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-[#E0B873] mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-[#A3A3A3]">Accommodates groups from 20 to 200+ guests</span>
+                        </div>
+                    </div>
+                    <a href="mailto:dizuccheropr@gmail.com" class="btn-primary">Request Private Event Info</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservations Section -->
+    <section id="reservations" class="section-padding bg-[#121212]">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-light mb-4 text-[#F5F5F5] tracking-tight">
+                    Reserve Your Table
+                </h2>
+                <div class="accent-line"></div>
+                <p class="text-lg max-w-3xl mx-auto text-[#A3A3A3]">
+                    Join us for an unforgettable Italian dining experience in the heart of Condado
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 mb-12 fade-in">
+                <div>
+                    <h3 class="text-2xl font-light mb-6 text-[#E0B873]" style="font-family: 'Montserrat', sans-serif;">
+                        Contact Information
+                    </h3>
+                    <div class="space-y-6">
+                        <div>
+                            <p class="text-sm text-[#E0B873] uppercase tracking-wider mb-2">Phone</p>
+                            <a href="tel:7879460834" class="text-xl text-[#F5F5F5] hover:text-[#E0B873] transition-colors">
+                                (787) 946-0834
+                            </a>
+                        </div>
+                        <div>
+                            <p class="text-sm text-[#E0B873] uppercase tracking-wider mb-2">Email</p>
+                            <a href="mailto:dizuccheropr@gmail.com" class="text-[#F5F5F5] hover:text-[#E0B873] transition-colors">
+                                dizuccheropr@gmail.com
+                            </a>
+                        </div>
+                        <div>
+                            <p class="text-sm text-[#E0B873] uppercase tracking-wider mb-2">Location</p>
+                            <p class="text-[#A3A3A3]">
+                                Ashford Avenue<br>
+                                Condado, San Juan<br>
+                                Puerto Rico<br>
+                                <span class="text-sm italic">(Across from San Juan Marriott Resort)</span>
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-[#E0B873] uppercase tracking-wider mb-2">Pet-Friendly</p>
+                            <p class="text-[#A3A3A3]">
+                                🐶 Well-behaved pets welcome on our terrace
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-light mb-6 text-[#E0B873]" style="font-family: 'Montserrat', sans-serif;">
+                        Hours of Operation
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between pb-4 border-b border-[#E0B873] border-opacity-20">
+                            <span class="text-[#F5F5F5]">Restaurant</span>
+                            <span class="text-[#A3A3A3]">Daily</span>
+                        </div>
+                        <div class="flex justify-between pb-4 border-b border-[#E0B873] border-opacity-20">
+                            <span class="text-[#F5F5F5]">Lunch & Dinner</span>
+                            <span class="text-[#A3A3A3]">12:00 PM - 11:00 PM</span>
+                        </div>
+                        <div class="flex justify-between pb-4 border-b border-[#E0B873] border-opacity-20">
+                            <span class="text-[#F5F5F5]">La Piazza Terrace Club</span>
+                            <span class="text-[#A3A3A3]">Fri, Sat, Sun</span>
+                        </div>
+                        <div class="flex justify-between pb-4 border-b border-[#E0B873] border-opacity-20">
+                            <span class="text-[#F5F5F5]">Club Hours</span>
+                            <span class="text-[#A3A3A3]">10:00 PM - 5:00 AM</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 p-6 bg-[#1a1a1a] border border-[#E0B873] border-opacity-20 rounded">
+                        <p class="text-[#A3A3A3] text-sm italic mb-4">
+                            "Reservations recommended for dinner service. Walk-ins welcome based on availability."
+                        </p>
+                        <p class="text-[#E0B873] text-sm">
+                            For VIP table reservations at La Piazza, please contact us in advance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center fade-in">
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="tel:7879460834" class="btn-primary">Call to Reserve</a>
+                    <a href="mailto:dizuccheropr@gmail.com" class="btn-secondary">Email Us</a>
+                </div>
+            </div>
+
+            <!-- Map -->
+            <div class="mt-16 fade-in rounded overflow-hidden" style="height: 400px;">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3785.0!2d-66.0750!3d18.4600!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTjCsDI3JzM2LjAiTiA2NsKwMDQnMzAuMCJX!5e0!3m2!1sen!2spr!4v1234567890"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Di Zucchero Location">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 bg-[#0d0d0d] border-t border-[#E0B873] border-opacity-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-12 mb-12">
+                <!-- Column 1 -->
+                <div>
+                    <h4 class="text-2xl font-light mb-4 text-[#E0B873]" style="font-family: 'Montserrat', sans-serif;">
+                        DI ZUCCHERO
+                    </h4>
+                    <p class="text-[#A3A3A3] leading-relaxed mb-4">
+                        Where authentic Italian dining meets vibrant Puerto Rican nightlife. Experience la dolce vita in the heart of Condado.
+                    </p>
+                    <p class="text-[#A3A3A3] text-sm">
+                        🐶 Pet-Friendly Terrace
+                    </p>
+                </div>
+
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-xl font-light mb-4 text-[#E0B873]" style="font-family: 'Montserrat', sans-serif;">
+                        Quick Links
+                    </h4>
+                    <ul class="space-y-2 text-[#A3A3A3]">
+                        <li><a href="#story" class="hover:text-[#E0B873] transition-colors">Our Story</a></li>
+                        <li><a href="#menu" class="hover:text-[#E0B873] transition-colors">Menu</a></li>
+                        <li><a href="#gallery" class="hover:text-[#E0B873] transition-colors">Gallery</a></li>
+                        <li><a href="#events" class="hover:text-[#E0B873] transition-colors">La Piazza Terrace Club</a></li>
+                        <li><a href="#private" class="hover:text-[#E0B873] transition-colors">Private Events</a></li>
+                        <li><a href="#reservations" class="hover:text-[#E0B873] transition-colors">Reservations</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-xl font-light mb-4 text-[#E0B873]" style="font-family: 'Montserrat', sans-serif;">
+                        Connect
+                    </h4>
+                    <p class="text-[#A3A3A3] mb-4">
+                        Stay updated on our latest events, special menus, and exclusive offers.
+                    </p>
+                    <div class="space-y-2">
+                        <p>
+                            <a href="tel:7879460834" class="text-[#F5F5F5] hover:text-[#E0B873] transition-colors">
+                                (787) 946-0834
+                            </a>
+                        </p>
+                        <p>
+                            <a href="mailto:dizuccheropr@gmail.com" class="text-[#F5F5F5] hover:text-[#E0B873] transition-colors">
+                                dizuccheropr@gmail.com
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-[#E0B873] border-opacity-20 pt-8 text-center">
+                <p class="text-sm text-[#A3A3A3]">
+                    © 2025 Di Zucchero. All rights reserved. | Ashford Avenue, Condado, San Juan, Puerto Rico
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (window.scrollY / scrollHeight);
+            scrollProgress.style.transform = `scaleX(${scrolled})`;
+        });
+
+        // Show/Hide Navbar on Scroll
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+
+            if (scrollTop > 100) {
+                navbar.classList.remove('hidden');
+
+                if (scrollTop > lastScrollTop && scrollTop > 300) {
+                    navbar.style.transform = 'translateY(-100%)';
+                } else {
+                    navbar.style.transform = 'translateY(0)';
+                }
+            } else {
+                navbar.classList.add('hidden');
+            }
+
+            lastScrollTop = scrollTop;
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Fade-in Animation on Scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active Nav Link
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Split Panel Click
+        document.querySelectorAll('.split-panel').forEach(panel => {
+            panel.addEventListener('click', function() {
+                const section = this.dataset.section;
+                if (section === 'dine') {
+                    document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+                } else if (section === 'dance') {
+                    document.getElementById('events').scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const parallaxSections = document.querySelectorAll('.parallax-section');
+            parallaxSections.forEach(section => {
+                const scrolled = window.scrollY;
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+
+                if (scrolled > sectionTop - window.innerHeight && scrolled < sectionTop + sectionHeight) {
+                    const offset = (scrolled - sectionTop) * 0.5;
+                    section.style.backgroundPositionY = `${offset}px`;
+                }
+            });
+        });
+
+        // Image Loading
+        window.addEventListener('load', () => {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                if (img.complete) {
+                    img.style.opacity = '1';
+                } else {
+                    img.addEventListener('load', () => {
+                        img.style.opacity = '1';
+                    });
+                }
+            });
+        });
+
+        // Add cursor pointer to clickable elements
+        document.querySelectorAll('.split-panel').forEach(panel => {
+            panel.style.cursor = 'pointer';
+        });
+    </script>
 </body>
 </html>
